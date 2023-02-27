@@ -125,7 +125,7 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 ### WebStorm+all Patch ###
-# Ignore everything but code style settings and run configurations
+# Ignore everything but code styles settings and run configurations
 # that are supposed to be shared within teams.
 
 .idea/*
