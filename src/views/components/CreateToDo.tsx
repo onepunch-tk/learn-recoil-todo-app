@@ -3,9 +3,10 @@ import styled from "styled-components";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup/dist/yup";
 import {InferType} from "yup";
-import { toDoSchema } from '../../models/todo-schema';
+import {toDoSchema} from '../../models/todo-schema';
 import {useSetRecoilState} from "recoil";
 import {toDoState} from "../../modules/states/todo-atom";
+import {EToDoCategory} from "../../modules/defines/enums";
 
 const ToDoForm = styled.form`
   display: flex;
@@ -37,7 +38,7 @@ function CreateToDo() {
         setToDos(oldToDos =>
             [...oldToDos, {
                 id: Date.now(),
-                category: "TO_DO",
+                category: EToDoCategory.TO_DO,
                 text: toDo
             }]
         );

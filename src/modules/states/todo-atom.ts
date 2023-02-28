@@ -1,14 +1,14 @@
 import {atom} from "recoil";
+import {EToDoCategory} from "../defines/enums";
 
 export const themeState = atom({
     key: "theme",
     default: true,
 });
 
-type Category = "TO_DO" | "DOING" | "DONE"
 interface IToDo {
     text:string;
-    category:Category;
+    category:EToDoCategory;
     id:number;
 }
 
