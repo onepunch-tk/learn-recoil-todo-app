@@ -3,7 +3,8 @@ import {themeState} from "./modules/states/todo-atom";
 import {darkTheme, lightTheme} from "./styles/theme";
 import {GlobalStyle} from "./styles/reset-css";
 import styled, {ThemeProvider} from "styled-components";
-import ToDoList from "./views/screens/ToDoList";
+import LearnRHF from "./views/screens/Learn-RHF";
+import ToDo from "./views/screens/ToDo";
 
 const Container = styled.div`
   display: flex;
@@ -21,7 +22,7 @@ function App() {
             <GlobalStyle/>
             <Container>
                 <button onClick={onClicked}>dark mode</button>
-                <ToDoList/>
+                <ToDo/>
             </Container>
         </ThemeProvider>
     )
