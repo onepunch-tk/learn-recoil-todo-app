@@ -1,33 +1,46 @@
-import {useRecoilState} from "recoil";
-import {toDoState} from "../../modules/states/todo-atom";
 import {EToDoCategory} from "../../modules/defines/enums";
+import {categoriesState, ICategory, IToDo, selectedCategoryState, toDoState} from "../../modules/states/todo-atom";
+import {useRecoilValue, useSetRecoilState} from "recoil";
+import {Title} from "../../styles/modules";
 
-function ToDoList() {
-    const [toDos, setToDos] = useRecoilState(toDoState);
+interface IToDoListProps {
+    toDos:IToDo[],
+}
 
-    const changeCategory = (id: number, newCategory: EToDoCategory) => {
+function ToDoList({toDos}:IToDoListProps) {
+    const setToDos = useSetRecoilState(toDoState);
+    const currentCategory= useRecoilValue(selectedCategoryState);
+    const categories = useRecoilValue(categoriesState);
+    const title = Object.values(currentCategory).join();
+
+    const changeCategory = (id: number, newCategory: ICategory) => {
         setToDos(oldToDos => {
             const targetIndex = oldToDos.findIndex(toDo => toDo.id == id);
-            const oldToDo = oldToDos[targetIndex];
-            const changeToDo = {...oldToDo, category:newCategory};
+            const changeToDo = {...oldToDos[targetIndex], category: newCategory};
 
-            return [...oldToDos.slice(0,targetIndex), changeToDo, ...oldToDos.slice(targetIndex+1)];
+            return [...oldToDos.slice(0, targetIndex), changeToDo, ...oldToDos.slice(targetIndex + 1)];
         });
     };
     return (
-        <ul>
-            {toDos?.map(todo =>
-                <li key={todo.id}>
-                    <span>{todo.text}</span>
-                    {todo.category !== EToDoCategory.TO_DO &&
-                        <button onClick={() => changeCategory(todo.id, EToDoCategory.TO_DO)}>To Do</button>}
-                    {todo.category !== EToDoCategory.DOING &&
-                        <button onClick={() => changeCategory(todo.id, EToDoCategory.DOING)}>Doing</button>}
-                    {todo.category !== EToDoCategory.DONE &&
-                        <button onClick={() => changeCategory(todo.id, EToDoCategory.DONE)}>Done</button>}
-                </li>
-            )}
-        </ul>
+        <>
+            <Title>{title}</Title>
+            <ul>
+                {toDos?.map(todo =>
+                    <li key={todo.id}>
+                        <span>{todo.text}</span>
+                        {/*{todo.category !== EToDoCategory.TO_DO &&*/}
+                        {/*    <button onClick={() => changeCategory(todo.id, EToDoCategory.TO_DO)}>To Do</button>}*/}
+                        {/*{todo.category !== EToDoCategory.DOING &&*/}
+                        {/*    <button onClick={() => changeCategory(todo.id, EToDoCategory.DOING)}>Doing</button>}*/}
+                        {/*{todo.category !== EToDoCategory.DONE &&*/}
+                        {/*    <button onClick={() => changeCategory(todo.id, EToDoCategory.DONE)}>Done</button>}*/}
+                        {categories.map((cat,index)=>Object.keys(cat).join() !== Object.keys(currentCategory).join()
+                            && <button key={index} onClick={() => changeCategory(todo.id, cat)}>{Object.values(cat).join()}</button>)}
+                    </li>
+                )}
+            </ul>
+        </>
+
     );
 }
 

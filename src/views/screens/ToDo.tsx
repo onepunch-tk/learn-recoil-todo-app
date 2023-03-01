@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import ToDoList from "../components/ToDoList";
+import ShowToDoList from "../components/ShowToDoList";
 import CreateToDo from "../components/CreateToDo";
 
 const ToDoWrapper = styled.div`
@@ -14,7 +14,7 @@ function ToDo() {
     return (
         <ToDoWrapper>
             <CreateToDo/>
-            <ToDoList/>
+            <ShowToDoList/>
         </ToDoWrapper>
     );
 }

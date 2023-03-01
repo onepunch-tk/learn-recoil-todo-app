@@ -41,7 +41,7 @@ export const GlobalStyle = createGlobalStyle`
   body {
     line-height: 1;
     font-family: 'Source Sans Pro', sans-serif;
-    background-color: ${props => props.theme.bgColor};
+    background-color: ${props => props.theme.mainBgColor};
   }
 
   ol, ul {
@@ -66,5 +66,9 @@ export const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
     color: inherit;
+  }
+  
+  input:focus {
+    outline: none;
   }
 `;
