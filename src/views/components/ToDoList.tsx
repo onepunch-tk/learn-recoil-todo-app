@@ -28,12 +28,7 @@ function ToDoList({toDos}:IToDoListProps) {
                 {toDos?.map(todo =>
                     <li key={todo.id}>
                         <span>{todo.text}</span>
-                        {/*{todo.category !== EToDoCategory.TO_DO &&*/}
-                        {/*    <button onClick={() => changeCategory(todo.id, EToDoCategory.TO_DO)}>To Do</button>}*/}
-                        {/*{todo.category !== EToDoCategory.DOING &&*/}
-                        {/*    <button onClick={() => changeCategory(todo.id, EToDoCategory.DOING)}>Doing</button>}*/}
-                        {/*{todo.category !== EToDoCategory.DONE &&*/}
-                        {/*    <button onClick={() => changeCategory(todo.id, EToDoCategory.DONE)}>Done</button>}*/}
+
                         {categories.map((cat,index)=>Object.keys(cat).join() !== Object.keys(currentCategory).join()
                             && <button key={index} onClick={() => changeCategory(todo.id, cat)}>{Object.values(cat).join()}</button>)}
                     </li>
