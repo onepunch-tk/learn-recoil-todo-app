@@ -25,7 +25,6 @@ const ToDoWrapper = styled.div`
 
 function ShowToDoList() {
     const toDoList = useRecoilValue(toDoSelector);
-
     return (
         <ToDoListWrapper>
             <ToDoWrapper>

@@ -1,5 +1,7 @@
 import {atom, selector} from "recoil";
-import {EToDoCategory} from "../defines/enums";
+import {recoilPersist} from "recoil-persist";
+
+const { persistAtom } = recoilPersist({key:"toDoPersist"});
 
 export const themeState = atom({
     key: "theme",
@@ -18,24 +20,28 @@ export interface ICategory {
 
 export const selectedCategoryState = atom<ICategory>({
     key: "selectedCategory",
-    default: {"TODO": "To Do"}
+    default: {"TODO": "To Do"},
+    effects_UNSTABLE:[persistAtom]
+});
+
+export const toDoListState = atom<IToDo[]>({
+    key: "toDoList",
+    default: [],
+    effects_UNSTABLE:[persistAtom]
 });
 
 export const categoriesState = atom<ICategory[]>({
     key: "categories",
-    default: [{"TODO": "To Do"}, {"DOING": "Doing"}, {"DONE": "Done"}]
-});
-
-export const toDoState = atom<IToDo[]>({
-    key: "toDo",
-    default: []
+    default: [{"TODO": "To Do"}, {"DOING": "Doing"}, {"DONE": "Done"}],
+    effects_UNSTABLE:[persistAtom]
 });
 
 export const toDoSelector = selector({
     key: "toDoSelector",
     get: ({get}) => {
-        const allToDos = get(toDoState);
+        const allToDos = get(toDoListState)
         const category = get(selectedCategoryState);
-        return allToDos.filter(toDo => toDo.category === category);
+        return allToDos.filter(toDo => Object.keys(toDo.category).join() === Object.keys(category).join());
     },
+
 });

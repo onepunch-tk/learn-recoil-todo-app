@@ -3,18 +3,11 @@ import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup/dist/yup";
 import {InferType} from "yup";
 import {categorySchema, toDoSchema} from '../../models/todo-schema';
-import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
-import {categoriesState, ICategory, selectedCategoryState, toDoState} from "../../modules/states/todo-atom";
-import {ColumnFlexBox, ErrorMessage, RowFlexBox, Title} from "../../styles/modules";
+import {useRecoilState, useSetRecoilState} from "recoil";
+import {categoriesState, selectedCategoryState, toDoListState} from "../../modules/states/todo-atom";
+import {Button, ColumnFlexBox, ErrorMessage, RowFlexBox, SubTitle, Title, Wrapper} from "../../styles/modules";
 import React from "react";
 
-const Wrapper = styled(ColumnFlexBox)`
-  margin-top: 20px;
-  width: 400px;
-  padding: 10px 0 20px 0;
-  border: 1px solid red;
-  justify-content: space-evenly;
-`;
 
 const ToDoForm = styled(RowFlexBox)`
   margin-top: 5px;
@@ -41,26 +34,7 @@ const FormWrapper = styled(ColumnFlexBox)`
   width: 230px;
 `;
 
-const SubmitBtn = styled.button`
-  background-color: #cd84f1;
-  border: none;
-  border-radius: 5px;
-  height: 20px;
-  color: ${props => props.theme.mainBgColor};
 
-  :hover {
-    transform: scale(1.2);
-  }
-
-  transition: transform 0.3s ease-out;
-`
-
-const SubTitle = styled.h2`
-  color: ${props => props.theme.mainTextColor};
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 5px;
-`;
 
 const CategoryTitle = styled(SubTitle)`
   color: ${props => props.theme.subTextColor};
@@ -131,7 +105,7 @@ interface ICategoryForm extends InferType<typeof categorySchema> {
 function CreateToDo() {
     const [categories, setCategories] = useRecoilState(categoriesState);
     const [currentCategory, setCurrentCategory] = useRecoilState(selectedCategoryState);
-    const setToDos = useSetRecoilState(toDoState);
+    const setToDos = useSetRecoilState(toDoListState);
     const {
         register: todoRegister,
         handleSubmit: todoSubmit,
@@ -206,7 +180,7 @@ function CreateToDo() {
                     <MessageWrapper>
                         {catErrors.value && <ErrorMessage>{catErrors.value.message}</ErrorMessage>}
                     </MessageWrapper>
-                    <SubmitBtn>Add</SubmitBtn>
+                    <Button>Add</Button>
                 </CategoryForm>
 
             </FormWrapper>
@@ -224,7 +198,7 @@ function CreateToDo() {
                 <SubTitle>Add To Do : </SubTitle>
                 <ToDoForm as={"form"} onSubmit={todoSubmit(addToDo)}>
                     <input {...todoRegister("toDo")} placeholder={"Write To Do!"}/>
-                    <SubmitBtn>Add</SubmitBtn>
+                    <Button>Add</Button>
                 </ToDoForm>
                 <MessageWrapper>
                     {todoErrors.toDo && <ErrorMessage>{todoErrors.toDo.message}</ErrorMessage>}

@@ -16,12 +16,10 @@ const Container = styled.div`
 
 function App() {
     const [isDark, setThemeState] = useRecoilState(themeState);
-    const onClicked = () => setThemeState(prev => !prev);
     return (
         <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
             <GlobalStyle/>
             <Container>
-                <button onClick={onClicked}>dark mode</button>
                 <ToDo/>
             </Container>
         </ThemeProvider>
